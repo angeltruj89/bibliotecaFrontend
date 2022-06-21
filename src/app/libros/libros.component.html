@@ -1,0 +1,90 @@
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Lista de Libros</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class=col-2>
+            <button *ngIf="!mostrarForm" type="button" class="btn btn-primary" (click)="mostrandoForm()">Agregar</button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div [ngClass]="{'col-6' : mostrarForm, 'col-12' : !mostrarForm}">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <td scope="col">Id</td>
+                        <td>Nombre</td>
+                        <td>Categoria</td>
+                        <td>Acciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let libro of libros" class="text-center">
+                        <td>
+                            <p [innerHTML] = "libro.id_libro"></p>
+                        </td>
+                        <td>
+                            <p [innerHTML] = "libro.nombre_libro"></p>
+                        </td>
+                        <td>
+                            <p [innerHTML] = "libro.id_categoria"></p>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" title="Editar" (click)="editar_libro(libro.id_libro)">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" title="Eliminar" (click)="eliminar_libro(libro.id_libro)">
+                                <i class="fa-solid fa-circle-minus"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="mostrarForm" class="col-6">
+            <form [formGroup]="formGroup">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-pretend">
+                            <div class="input-group-text bg-white">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" formControlName="nombre_libro" placeholder="Nombre del libro">
+                        <p class="error-validacion col-10">
+                            {{validarControl('nombre_libro', 'formGroup')}}
+                        </p>
+                    </div>
+                </div>         
+                <br>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-pretend">
+                            <div class="input-group-text bg-white">
+                                <i class="fa-solid fa-list"></i>
+                            </div>
+                        </div>
+                        <select name="" formControlName="id_categoria" class="form-control">
+                            <option value="0">Selecciona una categoria</option>
+                            <option [value]=""></option>
+                        </select>
+                    </div>
+                </div>              
+            </form>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <button class="btn btn-success" (click)="guardarElemento()" *ngIf=!editando>Guardar</button>
+                    <button class="btn btn-primary" (click)="actualizar_libro()" *ngIf=editando>Actualizar</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-warning" (click)="ocultarForm()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

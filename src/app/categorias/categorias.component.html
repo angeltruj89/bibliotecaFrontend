@@ -1,0 +1,87 @@
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Lista de Categorias</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class=col-2>
+            <button *ngIf="!mostrarForm" type="button" class="btn btn-primary" (click)="mostrandoForm()">Agregar</button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div [ngClass]="{'col-6' : mostrarForm, 'col-12' : !mostrarForm}">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <td scope="col">Id</td>
+                        <td>Nombre</td>
+                        <td>Libros</td>
+                        <td>Acciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let categoria of categorias" class="text-center">
+                        <td>
+                            <p [innerHTML] = "categoria.id_categoria"></p>
+                        </td>
+                        <td>
+                            <p [innerHTML] = "categoria.nombre_categoria"></p>
+                        </td>
+                        <td>
+                            <p [innerHTML] = "categoria.id_categoria"></p>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" title="Editar" (click)="editar_categoria(categoria.id_categoria)">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" title="Eliminar" (click)="eliminar_categoria(categoria.id_categoria)">
+                                <i class="fa-solid fa-circle-minus"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="mostrarForm" class="col-6">
+            <form [formGroup]="formGroup">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-pretend">
+                            <div class="input-group-text bg-white">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" formControlName="nombre_categoria" placeholder="Nombre de la categoria">
+                    </div>
+                </div>         
+                <br>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-pretend">
+                            <div class="input-group-text bg-white">
+                                <i class="fa-solid fa-list"></i>
+                            </div>
+                        </div>
+                        <select name="" formControlName="id_libro" class="form-control">
+                            <option [ngValue]="0">Selecciona una libro</option>
+                            <option [value]="libro.id_libro" *ngFor="let libro of libros">{{libro.nombre_libro}}</option>
+                        </select>
+                    </div>
+                </div>              
+            </form>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <button class="btn btn-success" (click)="guardarElemento()" *ngIf=!editando [disabled]="formGroup.invalid">Guardar</button>
+                    <button class="btn btn-primary" (click)="actualizar_categoria()" *ngIf=editando>Actualizar</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-warning"(click)="ocultarForm()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
